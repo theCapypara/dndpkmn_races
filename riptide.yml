@@ -1,0 +1,47 @@
+project:
+  name: pmdndsheets
+  src: .
+  app:
+    name: pmdndsheets
+    services:
+      php:
+        $ref: /service/php/7.3/fpm
+        roles:
+        - src
+        - php
+        - mail
+        logging:
+          stdout: true
+          stderr: true
+        environment:
+          DEVMODE: "1"
+      www:
+        $ref: /service/nginx/latest
+        roles:
+        - src
+        - main
+        image: nginx
+        logging:
+          stdout: true
+          stderr: true
+        config:
+          nginx_conf:
+            from: nginx.conf
+            to: '/etc/nginx/conf.d/default.conf'
+      db:
+        $ref: /service/mysql/8.0
+        roles:
+          - db
+        driver:
+          config:
+            database: pmdnd
+            password: pmdnd
+    commands:
+      node:
+        $ref: /command/node/12
+      yarn:
+        $ref: /command/yarn/node12
+      php:
+        $ref: /command/php/from-service
+      composer:
+        $ref: /command/composer/with-host-links

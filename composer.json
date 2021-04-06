@@ -1,0 +1,17 @@
+{
+    "name": "parakoopa/pmdndsheets",
+    "description": "Race sheets for pmdnd",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Parakoopa",
+            "email": "hello@parakoopa.de"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "twig/twig": "^3.3",
+        "pecee/simple-router": "4.3.2.1"
+    }
+}
