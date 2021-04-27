@@ -1,0 +1,8 @@
+{% if previousBlockName == 'pic_btm' %}
+    <div style="margin-top: 325px;" class="force-no-top-margin-mobile">
+        {{ content|raw }}
+    </div>
+{% else %}
+    {{ content|raw }}
+{% endif %}
+

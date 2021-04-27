@@ -1,0 +1,19 @@
+<h2>
+    Racial Attacks: <span class="subheading">Pick One</span>
+</h2>
+{% if pokemon['attacks_l7'] %}<h3>LV 1</h3>{% endif %}
+{% for attack in pokemon['attacks'] %}
+    <p class="hanging book-entry">
+        <span class="book-entry--title"><a href="{{ attack['url'] }}" target="_blank">{{ attack['name'] }}</a></span>
+        <span class="book-entry--page">Pg XXXX</span>
+    </p>
+{% endfor %}
+{% if pokemon['attacks_l7'] %}
+    <h3>LV 7</h3>
+    {% for attack in pokemon['attacks_l7'] %}
+        <p class="hanging book-entry">
+            <span class="book-entry--title"><a href="{{ attack['url'] }}" target="_blank">{{ attack['name'] }}</a></span>
+            <span class="book-entry--page">Pg XXXX</span>
+        </p>
+    {% endfor %}
+{% endif %}

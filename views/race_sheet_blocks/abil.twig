@@ -1,0 +1,17 @@
+<h2>
+    Abilities: <span class="subheading">Pick One</span>
+</h2>
+{% for ability in pokemon['abilities'] %}
+    <p class="hanging flavor">
+        <span class="inline-h3">{{ ability['name'] }}:</span>
+        {{ ability['flavor'] }}
+    </p>
+    <p class="ability-desc">
+        {{ ability['description'] }}
+    </p>
+    {% if false and ability['mega'] %}
+        <p class="ability-desc">
+            <span class="inline-h3">Mega:</span> {{ ability['mega'] }}
+        </p>
+    {% endif %}
+{% endfor %}

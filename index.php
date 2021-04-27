@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 require_once dirname(__FILE__) . '/config.php';
 if (Config::isDevmode()) {
     ini_set('display_errors', "1");
@@ -11,6 +12,7 @@ if (Config::isDevmode()) {
 require_once dirname(__FILE__) . '/vendor/autoload.php';
 require_once dirname(__FILE__) . '/vendor/pecee/simple-router/helpers.php';
 require_once dirname(__FILE__) . '/db.php';
+require_once dirname(__FILE__) . '/content.php';
 
 use Pecee\Http\Request;
 use Pecee\SimpleRouter\Exceptions\NotFoundHttpException;
@@ -94,12 +96,11 @@ SimpleRouter::get('/{pokemon}', function($pokemonName) use ($loader) {
         ]);
         return;
     }
-    //var_dump($race);die;
     echo $twig->render('race_sheet.twig', [
         'pokemon' => $race,
         'head' => createHeadData($race['_id'], $race['name']),
         'showOg' => true,
-        'pic1_exists' => file_exists(dirname(__FILE__) . '/assets/poke/'. $race['_id'] .'/pic1.png')
+        'content' => (new Content($twig, $race))->render()
     ]);
 });
 

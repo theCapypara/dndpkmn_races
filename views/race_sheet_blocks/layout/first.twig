@@ -1,0 +1,26 @@
+<div class="sheet page1 {{ sheet_mod_class }}">
+    <div class="bg" style='background-image: url("/assets/bg/gen{{ pokemon['gen'] }}/{{ sheet_mod_bg_name }}.jpg");'>
+        <div class="header" style='background-image: url("/assets/poke/{{ pokemon['_id'] }}/header.jpg");'></div>
+        <img class="header-mobile" src="/assets/poke/{{ pokemon['_id'] }}/header.jpg">
+        <div class="bg-ball" style='background-image: url("/assets/bg/stage{{ pokemon['stage'] }}/ball.png");'></div>
+        {% if pic1_exists %}
+            <div class="char-img-head">
+                <img src="/assets/poke/{{ pokemon['_id'] }}/pic1.png">
+            </div>
+        {% endif %}
+        <div class="content">
+            <div class="content-inner">
+                {% if pic1_exists %}
+                    <div class="char-img-head-mobile">
+                        <img src="/assets/poke/{{ pokemon['_id'] }}/pic1.png">
+                    </div>
+                {% endif %}
+                <h2 class="no-underline">
+                    {{ pokemon['name'] }}: <span class="subheading">{{ pokemon['type1'] }} {% if pokemon['type2'] %} / {{ pokemon['type2'] }} {% endif %} Type</span>
+                </h2>
+                {{ content|raw }}
+            </div>
+            {{ footer|raw }}
+        </div>
+    </div>
+</div>

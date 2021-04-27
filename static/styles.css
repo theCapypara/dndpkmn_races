@@ -51,6 +51,10 @@ p {
     font-weight: bolder;
 }
 
+.sheet p {
+    line-height: 1.3em;
+}
+
 p.flavor {
     font-family: 'Tinos', serif;
     font-weight: normal;
@@ -290,6 +294,7 @@ header p .button {
 .sheet .char-img-inline--bottom {
     position: absolute;
     z-index: 80;
+    bottom: -40px;
 }
 
 .sheet .char-img-inline img {
@@ -327,32 +332,28 @@ header p .button {
     font-size: 12px;
 }
 
-/* PAGE 1 */
-.sheet.page1 .bg {
+/* ODD PAGES */
+.sheet.sheet--odd .bg {
     width: 100%;
     height: 100%;
 }
 
-.sheet.page1 .content-inner {
-    padding: 320px 30px 0 30px;
+.sheet.sheet--odd .content-inner {
+    padding: 10px 30px 0 30px;
 }
 
-.sheet.page1 .content-inner > h2:first-of-type {
-    padding-top: 60px;
-}
-
-.sheet.page1 .footer {
+.sheet.sheet--odd .footer {
     background-image: url("/assets/bg/nav1.png");
 }
 
-.sheet.page1 .footer .pagenum {
+.sheet.sheet--odd .footer .pagenum {
     left: 5px;
     bottom: 7px;
     width: 21px;
     text-align: center;
 }
 
-.sheet.page1 .bg-ball {
+.sheet.sheet--odd .bg-ball {
     width: 100%;
     position: absolute;
     height: 500px;
@@ -363,28 +364,55 @@ header p .button {
     transform: rotate(220deg);
 }
 
-/* PAGE 2 */
-.sheet.page2 .bg {
+/* PAGE 1 */
+.sheet.sheet--odd.page1 .content-inner {
+    padding: 320px 30px 0 30px;
+}
+
+.sheet.sheet--odd.page1 .content-inner > h2:first-of-type {
+    padding-top: 60px;
+}
+
+.sheet.sheet--odd.page1 .footer .pagenum {
+    left: 5px;
+    bottom: 7px;
+    width: 21px;
+    text-align: center;
+}
+
+.sheet.sheet--odd.page1 .bg-ball {
+    width: 100%;
+    position: absolute;
+    height: 500px;
+    top: 120px;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 50% auto;
+    transform: rotate(220deg);
+}
+
+/* PAGE EVEN */
+.sheet.sheet--even .bg {
     width: 100%;
     height: 100%;
 }
 
-.sheet.page2 .content-inner {
+.sheet.sheet--even .content-inner {
     padding: 10px 30px 0 30px;
 }
 
-.sheet.page2 .footer {
+.sheet.sheet--even .footer {
     background-image: url("/assets/bg/nav2.png");
 }
 
-.sheet.page2 .footer .pagenum {
+.sheet.sheet--even .footer .pagenum {
     right: 5px;
     bottom: 7px;
     width: 21px;
     text-align: center;
 }
 
-.sheet.page2 .bg-ball {
+.sheet.sheet--even .bg-ball {
     width: 100%;
     position: absolute;
     height: 500px;
@@ -524,25 +552,33 @@ header p .button {
     }
 
     /* PAGE 1 */
-    .sheet.page1 .content-inner {
+    .sheet.sheet--odd.page1 .content-inner {
         padding: 60px 30px 0 30px;
     }
 
-    .sheet.page1 .content-inner > h2:first-of-type {
+    .sheet.sheet--odd.page1 .content-inner > h2:first-of-type {
         padding-top: 0;
         clear: both;
     }
 
-    .sheet.page1 .footer .pagenum {
+    .sheet.sheet--odd.page1 .footer .pagenum {
         left: 10px;
     }
 
-    /* PAGE 2 */
-    .sheet.page2 .content-inner {
+    /* PAGE ODD */
+    .sheet.sheet--odd .content-inner {
+        padding: 30px 30px 0 30px;
+    }
+    .sheet.sheet--odd .footer .pagenum {
+        left: 10px;
+    }
+
+    /* PAGE EVEN */
+    .sheet.sheet--even .content-inner {
         padding: 30px 30px 0 30px;
     }
 
-    .sheet.page2 .footer .pagenum {
+    .sheet.sheet--even .footer .pagenum {
         right: 10px;
     }
 }
@@ -582,7 +618,10 @@ header p .button {
     .sheet {
         overflow: hidden;
     }
-    .sheet.page1 {
+    p.flavor {
+        line-height: 1.3em;
+    }
+    .sheet:not(:last-of-type) {
         page-break-after: always;
     }
 }
