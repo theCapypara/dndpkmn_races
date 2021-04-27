@@ -1,0 +1,44 @@
+<!doctype html>
+
+<html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="utf-8">
+
+    <title>{{ head['title'] }}</title>
+    <meta name="description" content="{{ head['description'] }}">
+
+    {% if showOg %}
+    <meta property="og:title" content="{{ head['og_title'] }}">
+    <meta property="og:description" content="{{ head['description'] }}">
+    <meta property="og:site_name" content="{{ head['og_site_name'] }}">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://races.dndpkmn.com/{{ head['canonical'] }}">
+    <meta property="og:image" content="/favicon.png">
+
+    <link rel="canonical" href="https://races.dndpkmn.com/{{ head['canonical'] }}">
+    {% endif %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400;1,500&family=Stardos+Stencil:wght@400;700&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css?v=0.4">
+</head>
+
+<body>
+<header>
+    <a href="http://dndpkmn.com/"><img class="logo" src="/assets/logo.png"></a>
+    <p>
+        <a class="button" href="http://dndpkmn.com/players-pokedex.html">
+            Players Pokedex
+        </a>
+        <a class="button" href="http://dndpkmn.com/how-to-play.html">
+            How to play
+        </a>
+    </p>
+</header>

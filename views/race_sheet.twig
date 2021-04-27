@@ -1,261 +1,158 @@
-<!doctype html>
-
-<html lang="en" prefix="og: http://ogp.me/ns#">
-<head>
-    <meta charset="utf-8">
-
-    <title>Race Sheet Demo</title>
-    <meta name="description" content="-- Description Demo --">
-    <meta name="author" content="-- Author Demo --">
-
-    <meta property="og:title" content="-- OG Title Demo --">
-    <meta property="og:description"
-          content="-- OG Description Demo --">
-    <meta property="og:site_name" content="-- OG Site Name Demo --">
-    <meta property="og:locale" content="en_US">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="about:blank">
-    <meta property="og:image" content="/favicon.png">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400;1,500&family=Stardos+Stencil:wght@400;700&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/styles.css?v=0.2">
-</head>
-
-<body>
-<header>
-    <a class="button button-big" href="http://dndpkmn.com/players-pokedex.html">
-        Race Sheets
-    </a>
-</header>
+{{ include('_head.twig') }}
+<style>
+    @media only screen and (max-width: 1000px) {
+        .sheet-wrapper {
+            background-image: url("/assets/bg/gen{{ pokemon['gen'] }}/page1.jpg");
+        }
+    }
+</style>
 <div class="sheet-wrapper">
     <div class="sheet page1">
-        <div class="bg">
-            <div class="header" style='background-image: url("/assets/poke_tmp/header.png");'></div>
-            <img class="header-mobile" src="/assets/poke_tmp/header.png">
-            <div class="bg-ball"></div>
+        <div class="bg" style='background-image: url("/assets/bg/gen{{ pokemon['gen'] }}/page1.jpg");'>
+            <div class="header" style='background-image: url("/assets/poke/{{ pokemon['_id'] }}/header.jpg");'></div>
+            <img class="header-mobile" src="/assets/poke/{{ pokemon['_id'] }}/header.jpg">
+            <div class="bg-ball" style='background-image: url("/assets/bg/stage{{ pokemon['stage'] }}/ball.png");'></div>
+            {% if pic1_exists %}
             <div class="char-img-head">
-                <img src="/assets/poke_tmp/deli1.png">
+                <img src="/assets/poke/{{ pokemon['_id'] }}/pic1.png">
             </div>
+            {% endif %}
             <div class="content">
                 <div class="content-inner">
+                    {% if pic1_exists %}
                     <div class="char-img-head-mobile">
-                        <img src="/assets/poke_tmp/deli1.png">
+                        <img src="/assets/poke/{{ pokemon['_id'] }}/pic1.png">
                     </div>
+                    {% endif %}
                     <h2 class="no-underline">
-                        Delibird: <span class="subheading">Ice / Flying Type</span>
+                        {{ pokemon['name'] }}: <span class="subheading">{{ pokemon['type1'] }} {% if pokemon['type2'] %} / {{ pokemon['type2'] }} {% endif %} Type</span>
                     </h2>
-                    <p class="flavor hanging">
-                        Delibird squinted her eyes as she trudged through the deep snow,
-                        the snowstorm around her was trying to force her backwards with each
-                        step she took. This wasn't good. She had been wandering for hours now
-                        with no sign of the lost adventurer she had been sent to find.
-                        If she didn't find him soon, then the next time anyone would be able
-                        to get to him was the spring thaw, and by then... She shuddered at
-                        the thought. No. She had to find him tonight; she wouldn't return to
-                        the others until she had.
-                    </p>
-                    <h2>Stories</h2>
-                    <p>
-                        It is almost universally agreed that Delibird are kind souls.
-                        They carry food around in their tails to give to those in need and will
-                        often help out any creature that looks to be in distress, even if it would
-                        hurt the Delibird to do so. In exchange for the food they give, they will
-                        often ask the creatures they helped to share a story with them. They will
-                        then go around sharing the stories they have learned around the campfire
-                        with other wandering creatures on long nights around a crackling fire.
-                    </p>
+                    <p class="flavor hanging">{{ pokemon['stories'][0] }}</p>
+                    <h2>{{ pokemon['heads'][0]['title'] }}</h2>
+                    <p>{{ pokemon['heads'][0]['description'] }}</p>
                     <div class="bluebox bluebox-left">
                         <div class="bluebox--inner">
-                            <h2>Food Storage</h2>
-                            <p>
-                                Your tail holds magical properties and is larger on the inside then the outside
-                                that most delibird use to store food. The opening o0f it is a 1 foot cube and the
-                                inside is a 4 foot cube that can hold a max of 50 lbs. Any object placed inside
-                                can not spoil from non magical means, objects enhanced by magic, such as the
-                                good berry spell, will still spoil. When taking an item out of the bag it is the
-                                same temperature as it was when it went in.
-                            </p>
+                            <h2>{{ pokemon['evotraits'][0]['title'] }}</h2>
+                            <p>{{ pokemon['evotraits'][0]['description'] }}</p>
                         </div>
                     </div>
-                    <h2>Fling</h2>
+                    <h2>{{ pokemon['heads'][1]['title'] }}</h2>
+                    <p>{{ pokemon['heads'][1]['description'] }}</p>
+                    <h2>{{ pokemon['location']['title'] }}</h2>
+                    <p>{{ pokemon['location']['description'] }}</p>
+                    <h2>{{  pokemon['name'] }} Traits</h2>
                     <p>
-                        Most Delibird don't like to fight, and if they meet another creature that
-                        wants to fight, they will often chuck food and sweets at them in an attempt
-                        to make a distraction as they try to run away. They are always on the lookout
-                        for food to store inside their tail and when offering the food to others will
-                        often cry if they don't have a type of food that the creature wants.
-                        Although most are nice, some Delibird can be greedy so if you see a Delibird
-                        with a huge tail, watch out; They tend to be more fierce and selfish, keeping
-                        their food all to themselves and attacking anyone who dares to take it.
-                    </p>
-                    <h2>Harsh Weather</h2>
-                    <p>
-                        Delibird will often make homes in the most inhospitable places to make a safe
-                        haven for traveling creatures to stop by and rest. They prefer colder locations
-                        and tundras, but can live in warm climates if it means that they will be able
-                        to help those in need of a place to recuperate. They will rarely turn away a
-                        creature who comes to their door, however because of this they are often taken
-                        advantage of by others.
-                    </p>
-                    <h2>Delibird Traits</h2>
-                    <p>
-                        <span class="inline-h3">Allignment:</span> Although they are always wanting to help others,
-                        most Delibird are afraid of breaking the rules and will only do so if it would help
-                        another creature out. When helping others out they will often forget about themselves.
-                        If they run across someone who is rude and ‘bad’ they will try to set them on the right
-                        path.
+                        <span class="inline-h3">Allignment:</span> {{ pokemon['alignment'] }}
                     </p>
                     <h3>Size</h3>
                     <p>
-                        Height: 2’11”<br>
-                        Weight: 35 LBS
+                        Height: {{ pokemon['height'] }}<br>
+                        Weight: {{ pokemon['weight'] }}
                     </p>
                 </div>
                 <div class="footer">
                     <div class="pagenum">X</div>
-                    <div class="artist">Pictures drawn by: Charburst</div>
+                    <div class="artist"><strong>Pictures drawn by: <a href="{{ pokemon['artist_link'] }}">{{ pokemon['artist'] }}</a></strong></div>
                 </div>
             </div>
         </div>
     </div>
     <div class="sheet page2">
-        <div class="bg">
-            <div class="bg-ball"></div>
+        <div class="bg" style='background-image: url("/assets/bg/gen{{ pokemon['gen'] }}/page2.jpg");'>
+            <div class="bg-ball" style='background-image: url("/assets/bg/stage{{ pokemon['stage'] }}/ball.png");'></div>
             <div class="content">
                 <div class="content-inner">
+                    {% if pokemon['pic2_pos']|lower == 'top left' %}
+                        <div class="char-img-inline">
+                            <img src="/assets/poke/{{ pokemon['_id'] }}/pic2.png">
+                        </div>
+                    {% endif %}
                     <h3>Speed</h3>
-                    <p>
-                        25 Feet
-                    </p>
+                    <p>{{ pokemon['speed'] }}</p>
                     <h3>Age</h3>
-                    <p>
-                        Although there are some outliers, most Delibird will live to be around 100 years old.
-                        As they reach near the end of their lifespans the white feathers on their chest may start
-                        to turn a shiny silver. There are some stories whispered between Delibird that there is a
-                        Delibird who is 1000 years old. It travels on the north wind and will traverse the globe
-                        with a Stantler bringing winter cheer wherever it goes.
-                    </p>
+                    <p>{{ pokemon['age'] }}</p>
                     <h3>Languages</h3>
-                    <p>
-                        You can speak, read and write Common and Jthooic. Most Delibird have what would be
-                        described as a deep, booming voice. Their words although soft can be felt in your bones.
-                        Most creatures are surprised by the sound of their voices due to the bird's small size.
-                    </p>
+                    <p>{{ pokemon['languages'] }}</p>
                     <h3>Nature</h3>
                     <p>
                         There are 30 natures, pick a nature that best describes your character.
                         Increase and decrease the appropriate stat accordingly.
                     </p>
                     <h3>Racial Ability score increase</h3>
-                    <p>
-                        Although you are small, you will often traverse harsh climates to help those in need.
-                        Your Dexterity ability score increases by +1 and at level 7 your Constitution score
-                        increases by +2. See rules on racial ability score increase for more information.
-                    </p>
+                    <p>{{ pokemon['asi'] }}</p>
                     <h3>Evolution</h3>
+                    <p>{{ pokemon['evolution'] }}</p>
+                    <h2>{{ pokemon['name'] }} Names</h2>
                     <p>
-                        This is the only evolution of this line. Delibird can not evolve.
-                    </p>
-                    <h2>Delibird Names</h2>
-                    <p>
-                        Possible names for Delibird
+                        Possible names for {{ pokemon['name'] }}
                     </p>
                     <p class="hanging">
-                        Delibird, Cadoizo, Botogel, Delibyord or Xinshiniao
+                        {{ pokemon['names'] }}
                     </p>
+                    {% if pokemon['pic2_pos']|lower == 'bottom left' %}
                     <div class="char-img-inline char-img-inline--bottom">
-                        <img src="/assets/poke_tmp/deli2.png">
+                        <img src="/assets/poke/{{ pokemon['_id'] }}/pic2.png">
                     </div>
-                    <h2 style="margin-top: 365px;" class="force-no-top-margin-mobile">
+                    {% endif %}
+                    <h2 {% if pokemon['pic2_pos']|lower == 'bottom left' %}style="margin-top: 365px;"{% endif %} class="force-no-top-margin-mobile">
                         Abilities: <span class="subheading">Pick One</span>
                     </h2>
+                    {% for ability in pokemon['abilities'] %}
                     <p class="hanging flavor">
-                        <span class="inline-h3">Vital Spirit:</span>
-                        As you trudge through the bitter snow storm you can feel your bones ache.
-                        You have been traveling for so long that your body is begging you to take a
-                        break, but you can't stop just yet. You must go a little farther.
-                        Once you get to your destination you will take a quick nap, but till then you must push on.
+                        <span class="inline-h3">{{ ability['name'] }}:</span>
+                        {{ ability['flavor'] }}
                     </p>
                     <p class="ability-desc">
-                        When taking a long rest all levels of exhaustion are restored.
+                        {{ ability['description'] }}
                     </p>
-                    <p class="hanging flavor">
-                        <span class="inline-h3">Hustle:</span>
-                        You have a plan. It's not very concrete, but you don’t have time to come up
-                        with a better one. You have to hit fast and hard if you’re going to win this fight.
-                        You have no time to fiddle with weapons.
-                    </p>
-                    <p class="ability-desc">
-                        You may add your proficiency modifier to a damage roll instead of an attack
-                        roll for a weapon attack. This ability has no effect if you would not be able
-                        to add your proficiency modifier to the attack roll.
-                    </p>
-                    <p class="hanging flavor">
-                        <span class="inline-h3">Insomnia:</span>
-                        Your eyelids are heavy, but that is normal for you. Sleep is for the weak,
-                        and you refuse to be considered weak. So you must stay awake, stay awake and
-                        take down everyone in your path.
-                    </p>
-                    <p class="ability-desc">
-                        You can not be forced by another creature to fall asleep.
-                    </p>
+                    {% if false and ability['mega'] %}
+                        <p class="ability-desc">
+                            <span class="inline-h3">Mega:</span> {{ ability['mega'] }}
+                        </p>
+                    {% endif %}
+                    {% endfor %}
+                    {% if pokemon['pic2_pos']|lower == 'top right' %}
+                        <div class="char-img-inline">
+                            <img src="/assets/poke/{{ pokemon['_id'] }}/pic2.png">
+                        </div>
+                    {% endif %}
                     <h2>
                         Racial Attacks: <span class="subheading">Pick One</span>
                     </h2>
                     <h3>LV 1</h3>
+                    {% for attack in pokemon['attacks'] %}
                     <p class="hanging book-entry">
-                        <span class="book-entry--title">Present</span>
+                        <span class="book-entry--title"><a href="{{ attack['url'] }}" target="_blank">{{ attack['name'] }}</a></span>
                         <span class="book-entry--page">Pg XXXX</span>
                     </p>
+                    {% endfor %}
+                    {% if pokemon['attacks_l7'] %}
                     <h3>LV 7</h3>
+                    {% for attack in pokemon['attacks_l7'] %}
                     <p class="hanging book-entry">
-                        <span class="book-entry--title">Drill Peck</span>
+                        <span class="book-entry--title"><a href="{{ attack['url'] }}" target="_blank">{{ attack['name'] }}</a></span>
                         <span class="book-entry--page">Pg XXXX</span>
                     </p>
+                    {% endfor %}
+                    {% endif %}
                     <h2>Type Effectiveness</h2>
-                    <p class="hanging">
-                        Bug and Grass type racial attacks are not very effective against you.
-                        Also Rock, Steel, Fire and Electricity type racial attacks are super effective
-                        against you and you are immune to damage from Ground type racial attacks.
-                        (See Type Effectiveness for more information, PG XXXXX.)
-                    </p>
+                    <p class="hanging">{{ pokemon['type_advantages'] }}</p>
                     <h2>Evolution Trait</h2>
-                    <p class="hanging">
-                        You have a flying speed of 50 feet. To use this speed, you can’t be wearing medium
-                        or heavy armor. (see flying speed for more information).
-                    </p>
+                    <p><span class="inline-h3">{{ pokemon['evotraits'][1]['title'] }}: </span>{{ pokemon['evotraits'][1]['description'] }}</p>
                     <hr>
-                    <p class="flavor hanging">
-                        As he chopped up some Pecha berries, Delibird hummed a familiar song.
-                        His dinner was almost done cooking and he couldn't wait to try out the
-                        new recipe. It smelled delicious, and he hadn't had a warm meal for a long
-                        time now. After adding the berries to the stew and stirring for a bit, he
-                        oured it into a small bowl and sat down. Right before he was able to take
-                        a bite, his front door swung open. A Charmander hobbled in with a
-                        Sandshrew draped around his shoulders, unmoving. "Please, can you help
-                        us?!" Delibird put his spoon down, held back a sigh, stood up, and smiled.
-                        "Sure, come right in."
-                    </p>
+                    <p class="flavor hanging">{{ pokemon['stories'][1] }}</p>
+                    {% if pokemon['pic2_pos']|lower == 'bottom right' %}
+                        <div class="char-img-inline char-img-inline--bottom">
+                            <img src="/assets/poke/{{ pokemon['_id'] }}/pic2.png">
+                        </div>
+                    {% endif %}
                 </div>
                 <div class="footer">
                     <div class="pagenum">X</div>
-                    <div class="artist">Pictures drawn by: Charburst</div>
+                    <div class="artist"><strong>Pictures drawn by: <a href="{{ pokemon['artist_link'] }}">{{ pokemon['artist'] }}</a></strong></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<footer>
-    <a class="button" href="https://discord.gg/MMfVmJA">
-        Discord
-    </a>
-</footer>
-</body>
-</html>
+{{ include('_foot.twig') }}

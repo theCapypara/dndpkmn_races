@@ -1,3 +1,6 @@
 /_riptide/
 /.idea/
 /vendor/
+/assets
+.htaccess
+docker-compose.yml

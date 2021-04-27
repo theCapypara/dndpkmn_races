@@ -15,6 +15,9 @@ project:
           stderr: true
         environment:
           DEVMODE: "1"
+          AUTH_TOKEN: "pmdndy"
+          MONGO_DB_URI: "mongodb://root:{{ parent().services.db.driver.config.password }}@db"
+          MONGO_DB_NAME: "{{ parent().services.db.driver.config.database }}"
       www:
         $ref: /service/nginx/latest
         roles:
@@ -29,13 +32,9 @@ project:
             from: nginx.conf
             to: '/etc/nginx/conf.d/default.conf'
       db:
-        $ref: /service/mysql/8.0
-        roles:
-          - db
-        driver:
-          config:
-            database: pmdnd
-            password: pmdnd
+        $ref: /service/mongodb/latest
+      mongoexpress:
+        $ref: /service/mongo-express/from-service-db
     commands:
       node:
         $ref: /command/node/12
