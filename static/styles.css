@@ -258,12 +258,43 @@ header p .button {
     z-index: 350;
 }
 
+.sheet .content .bluebox.bluebox-right:after {
+    background-color: #3688b2;
+    height: 40px;
+    width: 100%;
+    content: ' ';
+    display: block;
+    margin-top: -30px;
+    margin-bottom: -40px;
+    z-index: -1;
+    position: relative;
+    border-radius: 20px;
+}
+
+.sheet .content .bluebox.bluebox-right {
+    position: relative;
+    bottom: 0;
+    right: 10px;
+    width: calc(100% + 70px);
+    margin-top: 10px;
+    break-inside: avoid-column;
+    padding-bottom: 40px;
+    z-index: 350;
+}
+
 .bluebox .bluebox--inner {
     background-color: #429cd5;
     border-radius: 20px;
     width: 100%;
     height: 100%;
+}
+
+.bluebox.bluebox-left .bluebox--inner {
     padding: 1px 5px 0px 30px;
+}
+
+.bluebox.bluebox-right .bluebox--inner {
+    padding: 1px 30px 0px 10px;
 }
 
 .sheet .content .bluebox h2 {
