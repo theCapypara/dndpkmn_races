@@ -105,7 +105,7 @@ class Content
 
     private function getLayout(int $pageNum)
     {
-        if (strtolower($this->race['stage']) == 'mega') {
+        if ($this->race['stage'] == 'mega') {
             switch ($pageNum) {
                 case 0:
                     return self::MEGA_FIRST_LAYOUT;
