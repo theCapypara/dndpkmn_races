@@ -30,6 +30,7 @@ hr {
 
 h3, .inline-h3 {
     font-family: 'Stardos Stencil', cursive;
+    color: #242a66;
     text-transform: uppercase;
     margin: 0;
     line-height: 1.1;
@@ -60,6 +61,10 @@ p.flavor {
     font-weight: normal;
     font-style: italic;
     line-height: 1.1em;
+}
+
+p.ability-flavor {
+    margin-bottom: 12px;
 }
 
 p.ability-desc {
@@ -156,6 +161,12 @@ footer {
 
 .button.button-big {
     font-size: 58px;
+}
+
+.button.button-small {
+    font-size: 24px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 header p .button {
@@ -632,6 +643,9 @@ header p .button {
         margin: 0;
     }
     header, footer {
+        display: none;
+    }
+    .headnav {
         display: none;
     }
     body {
