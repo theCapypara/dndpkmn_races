@@ -21,6 +21,8 @@ class Content
 
     const DEFAULT_LAYOUT = 'base';
     const FIRST_LAYOUT = 'first';
+    const MEGA_FIRST_LAYOUT = 'mega_first';
+    const MEGA_SECOND_LAYOUT = 'mega_second';
 
     const DIR_BLOCKS = 'race_sheet_blocks';
     const DIR_CONTAINER = 'container';
@@ -78,10 +80,11 @@ class Content
 
     public function renderPage(int $pageNum, string $pageContent)
     {
-        $pageLayout = $pageNum === 0 ? self::FIRST_LAYOUT : self::DEFAULT_LAYOUT;
+        $pageLayout = $this->getLayout($pageNum);
         return $this->tryRender(self::pathJoin(self::DIR_BLOCKS, self::DIR_LAYOUT, $pageLayout), [
             'pokemon' => $this->race,
             'pic1_exists' => file_exists(dirname(__FILE__) . '/assets/poke/'. $this->race['_id'] .'/pic1.png'),
+            'pic2_exists' => file_exists(dirname(__FILE__) . '/assets/poke/'. $this->race['_id'] .'/pic2.png'),
             'content' => $pageContent,
             'sheet_mod_class' => $pageNum % 2 == 0 ? 'sheet--odd' : 'sheet--even',
             'sheet_mod_bg_name' => $pageNum % 2 == 0 ? 'page1' : 'page2',
@@ -98,5 +101,20 @@ class Content
         } catch (LoaderError $exception) {
             return '';
         }
+    }
+
+    private function getLayout(int $pageNum)
+    {
+        if ($this->race['stage'] == 'Mega') {
+            switch ($pageNum) {
+                case 0:
+                    return self::MEGA_FIRST_LAYOUT;
+                case 1:
+                    return self::MEGA_SECOND_LAYOUT;
+                default:
+                    return self::DEFAULT_LAYOUT;
+            }
+        }
+        return $pageNum === 0 ? self::FIRST_LAYOUT : self::DEFAULT_LAYOUT;
     }
 }

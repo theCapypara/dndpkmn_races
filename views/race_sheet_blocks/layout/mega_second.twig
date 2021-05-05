@@ -1,0 +1,24 @@
+<div class="sheet page2 mega {{ sheet_mod_class }}">
+    <div class="bg" style='background-image: url("/assets/bg/gen{{ pokemon['gen'] }}/{{ sheet_mod_bg_name }}.jpg");'>
+        <div class="header" style='background-image: url("/assets/poke/{{ pokemon['_id'] }}/header.png");'></div>
+        <img class="header-mobile" src="/assets/poke/{{ pokemon['_id'] }}/header.png">
+        <div class="bg-ball" style='background-image: url("/assets/bg/stage{{ pokemon['stage'] }}/ball.png");'></div>
+        {% if pic2_exists %}
+            <div class="char-img-head">
+                <img src="/assets/poke/{{ pokemon['_id'] }}/pic2.png">
+            </div>
+        {% endif %}
+        <div class="content">
+            <div class="content-inner">
+                {% if pic2_exists %}
+                    <div class="char-img-head-mobile">
+                        <img src="/assets/poke/{{ pokemon['_id'] }}/pic2.png">
+                    </div>
+                    <div class="spacer"></div>
+                {% endif %}
+                {{ content|raw }}
+            </div>
+            {{ footer|raw }}
+        </div>
+    </div>
+</div>

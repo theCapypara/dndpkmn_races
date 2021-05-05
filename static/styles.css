@@ -116,6 +116,7 @@ header {
 }
 header p {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
     width: 800px;
@@ -208,6 +209,11 @@ header p .button {
     position: absolute;
     z-index: 100;
 }
+
+.sheet.mega .header {
+    background-color: transparent;
+}
+
 .sheet .header-mobile {
     display: none;
     mask-image: url("/assets/bg/header_crop.png");
@@ -306,6 +312,10 @@ header p .button {
 
 .bluebox.bluebox-right .bluebox--inner {
     padding: 1px 30px 0px 10px;
+}
+
+.sheet .content-inner .invisible {
+    opacity: 0;
 }
 
 .sheet .content .bluebox h2 {
@@ -415,22 +425,24 @@ header p .button {
     padding-top: 60px;
 }
 
-.sheet.sheet--odd.page1 .footer .pagenum {
-    left: 5px;
-    bottom: 7px;
-    width: 21px;
-    text-align: center;
+/* MEGA */
+.sheet.mega .char-img-head img {
+    margin-top: 185px;
+}
+.sheet.sheet--even.page2 .content-inner {
+    padding: 470px 30px 0 30px;
+}
+.sheet.sheet--even.page2 .content-inner > .spacer {
+    margin-top: -150px;
+}
+.sheet.sheet--even.page2 .char-img-head {
+    left: initial;
+    text-align: right;
+    right: 20px;
 }
 
-.sheet.sheet--odd.page1 .bg-ball {
-    width: 100%;
-    position: absolute;
-    height: 500px;
-    top: 120px;
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: 50% auto;
-    transform: rotate(220deg);
+.sheet.page2.mega .header {
+    transform: scaleX(-1);
 }
 
 /* PAGE EVEN */
@@ -603,10 +615,6 @@ header p .button {
         clear: both;
     }
 
-    .sheet.sheet--odd.page1 .footer .pagenum {
-        left: 10px;
-    }
-
     /* PAGE ODD */
     .sheet.sheet--odd .content-inner {
         padding: 30px 30px 0 30px;
@@ -623,6 +631,17 @@ header p .button {
     .sheet.sheet--even .footer .pagenum {
         right: 10px;
     }
+
+    /* MEGA */
+    .sheet.sheet--even.page2 .content-inner {
+        padding: 60px 30px 0 30px;
+    }
+
+    .sheet.sheet--even.page2 .content-inner > .spacer {
+        padding-top: 0;
+        clear: both;
+    }
+
 }
 
 /* TABLET */
