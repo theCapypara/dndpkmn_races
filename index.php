@@ -80,6 +80,35 @@ SimpleRouter::post('/submitSHEET', function() {
     }
 });
 
+SimpleRouter::post('/submitDEX', function() {
+    if (request()->getHeader('X-PMDND-Authorization', '') != Config::getAuthToken()) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => request()->getHeader('X-PMDND-Authorization', '')
+        ]);
+        //response()->httpCode(401);
+        return;
+    }
+    try {
+        if (request()->getContentType() != 'application/json') {
+            throw new Exception("Invalid / no data.");
+        }
+        $dex = @json_decode(file_get_contents('php://input'), true);
+        if ($dex === null || !is_array($dex)) {
+            throw new Exception("Invalid / no data.");
+        }
+        createDb()->importPokedex($dex);
+        echo json_encode([
+            'status' => 'ok'
+        ]);
+    } catch (Exception $ex) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => $ex->getMessage()
+        ]);
+    }
+});
+
 SimpleRouter::get('/gens/{gen}', function($gen) use ($loader) {
     $twig = new Environment($loader);
     // TODO
