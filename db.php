@@ -42,9 +42,13 @@ class Db
     {
         $operations = [];
         foreach ($pokedex as $pokedexEntry) {
+            $dexParts = explode(';', $pokedexEntry[1]);
+            if (count($dexParts) < 2) {
+                $dexParts[] = '';
+            }
             $operations[] = ['updateOne' => [
                 ['_id' => $pokedexEntry[1]],
-                ['$set' => ['_id' => $pokedexEntry[1], 'name' => $pokedexEntry[0]]],
+                ['$set' => ['_id' => $pokedexEntry[1], 'dex' => $dexParts[0], 'mod' => $dexParts[1], 'name' => $pokedexEntry[0]]],
                 ['upsert' => true]
             ]];
         }
@@ -62,7 +66,7 @@ class Db
     {
         $dexCollection = $this->database->pokedex;
         $vals = [];
-        foreach($dexCollection->find([], ['sort' => ['_id' => 1]]) as $r) {
+        foreach($dexCollection->find([], ['sort' => ['dex' => 1, 'mod' => 1]]) as $r) {
             $vals[$r['_id']] = $r['name'];
         }
         return $vals;
