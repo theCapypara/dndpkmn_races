@@ -46,6 +46,7 @@ class Db
                 continue;
             }
             $fake = false;
+            $_id = (string) $pokedexEntry[1];
             if (substr((string) $pokedexEntry[1], 0, 1) == 'F') {
                 $fake = true;
                 $pokedexEntry[1] = substr((string) $pokedexEntry[1], 1);
@@ -58,8 +59,8 @@ class Db
                 continue;
             }
             $operations[] = ['updateOne' => [
-                ['_id' => $pokedexEntry[1]],
-                ['$set' => ['_id' => $pokedexEntry[1], 'dex' => (int) $dexParts[0], 'mod' => $dexParts[1], 'name' => $pokedexEntry[0], 'fake' => $fake]],
+                ['_id' => $_id],
+                ['$set' => ['_id' => $_id, 'dex' => (int) $dexParts[0], 'mod' => $dexParts[1], 'name' => $pokedexEntry[0], 'fake' => $fake]],
                 ['upsert' => true]
             ]];
         }
