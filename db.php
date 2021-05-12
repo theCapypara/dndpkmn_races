@@ -45,13 +45,16 @@ class Db
             if (count($pokedexEntry) < 2 || !$pokedexEntry[1]) {
                 continue;
             }
-            $dexParts = explode(';', $pokedexEntry[1]);
+            $dexParts = explode(';', (string) $pokedexEntry[1]);
             if (count($dexParts) < 2) {
                 $dexParts[] = '';
             }
+            if ((int) $dexParts[0] == 0) {
+                continue;
+            }
             $operations[] = ['updateOne' => [
                 ['_id' => $pokedexEntry[1]],
-                ['$set' => ['_id' => $pokedexEntry[1], 'dex' => $dexParts[0], 'mod' => $dexParts[1], 'name' => $pokedexEntry[0]]],
+                ['$set' => ['_id' => $pokedexEntry[1], 'dex' => (int) $dexParts[0], 'mod' => $dexParts[1], 'name' => $pokedexEntry[0]]],
                 ['upsert' => true]
             ]];
         }
