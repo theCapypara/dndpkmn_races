@@ -184,7 +184,7 @@ header p .button {
 }
 
 .sheet {
-    height: 1035px;
+    height: 1055px;
     width: 800px;
     position: relative;
     margin: auto auto 30px;
@@ -681,9 +681,6 @@ header p .button {
     }
     .sheet {
         overflow: hidden;
-    }
-    p.flavor {
-        line-height: 1.3em;
     }
     .sheet:not(:last-of-type) {
         page-break-after: always;
