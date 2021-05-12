@@ -45,6 +45,11 @@ class Db
             if (count($pokedexEntry) < 2 || !$pokedexEntry[1]) {
                 continue;
             }
+            $fake = false;
+            if (substr((string) $pokedexEntry[1], 0, 1) == 'F') {
+                $fake = true;
+                $pokedexEntry[1] = substr((string) $pokedexEntry[1], 1);
+            }
             $dexParts = explode(';', (string) $pokedexEntry[1]);
             if (count($dexParts) < 2) {
                 $dexParts[] = '';
@@ -54,11 +59,12 @@ class Db
             }
             $operations[] = ['updateOne' => [
                 ['_id' => $pokedexEntry[1]],
-                ['$set' => ['_id' => $pokedexEntry[1], 'dex' => (int) $dexParts[0], 'mod' => $dexParts[1], 'name' => $pokedexEntry[0]]],
+                ['$set' => ['_id' => $pokedexEntry[1], 'dex' => (int) $dexParts[0], 'mod' => $dexParts[1], 'name' => $pokedexEntry[0]], 'fake' => $fake],
                 ['upsert' => true]
             ]];
         }
         $dexCollection = $this->database->pokedex;
+        $dexCollection->deleteMany([]);
         $dexCollection->bulkWrite($operations);
     }
 
@@ -68,21 +74,21 @@ class Db
         return $sheetCollection->findOne([ '_id' => $pokemonName]);
     }
 
-    public function listPokemonMapByDexId()
+    public function listPokemonMapByDexId($fakemon=false)
     {
         $dexCollection = $this->database->pokedex;
         $vals = [];
-        foreach($dexCollection->find([], ['sort' => ['dex' => 1, 'mod' => 1]]) as $r) {
+        foreach($dexCollection->find(['fake' => $fakemon], ['sort' => ['dex' => 1, 'mod' => 1]]) as $r) {
             $vals[$r['_id']] = $r['name'];
         }
         return $vals;
     }
 
-    public function listPokemonMapByName()
+    public function listPokemonMapByName($fakemon=false)
     {
         $dexCollection = $this->database->pokedex;
         $vals = [];
-        foreach($dexCollection->find([]) as $r) {
+        foreach($dexCollection->find(['fake' => $fakemon]) as $r) {
             $vals[$r['name']] = $r['_id'];
         }
         return $vals;
