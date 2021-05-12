@@ -59,7 +59,7 @@ class Db
             }
             $operations[] = ['updateOne' => [
                 ['_id' => $pokedexEntry[1]],
-                ['$set' => ['_id' => $pokedexEntry[1], 'dex' => (int) $dexParts[0], 'mod' => $dexParts[1], 'name' => $pokedexEntry[0]], 'fake' => $fake],
+                ['$set' => ['_id' => $pokedexEntry[1], 'dex' => (int) $dexParts[0], 'mod' => $dexParts[1], 'name' => $pokedexEntry[0], 'fake' => $fake]],
                 ['upsert' => true]
             ]];
         }
