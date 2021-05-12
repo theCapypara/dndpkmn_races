@@ -42,6 +42,9 @@ class Db
     {
         $operations = [];
         foreach ($pokedex as $pokedexEntry) {
+            if (count($pokedexEntry) < 2 || !$pokedexEntry[1]) {
+                continue;
+            }
             $dexParts = explode(';', $pokedexEntry[1]);
             if (count($dexParts) < 2) {
                 $dexParts[] = '';
