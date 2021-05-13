@@ -1,0 +1,79 @@
+{{ include('_head.twig') }}
+<style>
+    @media only screen and (max-width: 1000px) {
+        .sheet-wrapper {
+            background-image: url("/assets/bg/index/page1.jpg");
+        }
+    }
+</style>
+{% macro index_pagebreak(page_num) %}
+                </div>
+                <div class="footer">
+                    <div class="pagenum">{{ numberToRoman(page_num - 1) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sheet {% if page_num % 2 == 0 %}sheet--even{% else %}sheet--odd{% endif %}">
+        <div class="bg" style='background-image: url("/assets/bg/index/page{% if page_num % 2 == 0 %}2{% else %}1{% endif %}.jpg");'>
+            <div class="content">
+                <div class="content-inner">
+{% endmacro %}
+<div class="sheet-wrapper">
+    <div class="sheet sheet--odd">
+        <div class="bg" style='background-image: url("/assets/bg/index/page1.jpg");'>
+            <div class="content">
+                <div class="content-inner">
+                    <h1>Race Index</h1>
+                    <div class="stand-out-margin">
+                        <span class="flavor">
+                            This is the temporary index of all races playable in Pokémon D&D.
+                            Entries that are <span class="strike">striked-through</span> are not playable yet.
+                        </span>
+                    </div>
+                    {% set max = 49 %}
+                    {% set cur = 0 %}
+                    {% set page_num = 1 %}
+                    {% for gen in index %}
+                        {% if gen['items']|length > 0 %}
+                        <div class="stand-out-margin"></div>
+                        <h2>{{ gen['name'] }}</h2>
+                        {% set cur = cur + 2 %}
+                        {% for entry in gen['items'] %}
+                            <p class="book-entry {% if not entry['exists'] %}strike{% endif %}">
+                                <span class="book-entry--title">
+                                    {% if entry['exists'] %}
+                                        <a href="/{{ entry['id'] }}">
+                                    {% endif %}
+                                    <span class="poke_img">
+                                        {% if entry['icon'] %}
+                                            <img src="/assets/poke_mini/{{ entry['icon'] }}">
+                                        {% endif %}
+                                    </span>
+                                    {{ entry['name'] }}
+                                    {% if entry['exists'] %}
+                                        </a>
+                                    {% endif %}
+                                </span>
+                                <span class="book-entry--page">Pg {{ entry['page'] }}</span>
+                            </p>
+                            {% set cur = cur + 1 %}
+                            {% if cur > max %}
+                                {% set max = 51 %}
+                                {% set cur = 0 %}
+                                {% set page_num = page_num + 1 %}
+                                {{ _self.index_pagebreak(page_num) }}
+                            {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="footer">
+                    <div class="pagenum">{{ numberToRoman(page_num) }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{{ include('_foot.twig') }}

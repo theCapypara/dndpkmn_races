@@ -23,6 +23,20 @@ h2 {
     break-after: avoid-column;
 }
 
+.sheet h1 {
+    font-size: 28px;
+    color: #242a66;
+    border-bottom: 1px solid #242a66;
+    margin: 2px;
+    text-indent: 10px;
+    break-inside: avoid-column;
+    break-after: avoid-column;
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
 hr {
     border: none;
     border-bottom: 1px solid #242a66;
@@ -56,6 +70,10 @@ p {
     line-height: 1.3em;
 }
 
+.sheet .bg {
+    height: 100%;
+}
+
 p.flavor {
     font-family: 'Tinos', serif;
     font-weight: normal;
@@ -80,6 +98,8 @@ p.hanging {
 
 p.book-entry {
     display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
 }
 
 p.book-entry::after {
@@ -107,6 +127,29 @@ p.book-entry .book-entry--page {
 
 .force-break-before {
     break-before: column;
+}
+
+.stand-out-margin {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.headnav {
+    display: flex;
+    margin: 20px auto 0;
+    max-width: 800px;
+    text-align: center;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.headnav .nav {
+    flex: 0 0 auto;
+}
+
+.headnav .current {
+    flex: 0 1 auto;
 }
 
 header {
@@ -177,6 +220,12 @@ header p .button {
     height: 57px;
 }
 
+.poke_img {
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+}
+
 .sheet-wrapper {
     margin: auto;
     padding-top: 30px;
@@ -243,6 +292,10 @@ header p .button {
     width: 100%;
     position: relative;
     border-radius: 10px;
+}
+
+.sheet.sheet--one-col .content-inner {
+    column-count: 1;
 }
 
 .sheet .content-inner > * {
@@ -401,7 +454,7 @@ header p .button {
 .sheet.sheet--odd .footer .pagenum {
     left: 5px;
     bottom: 7px;
-    width: 21px;
+    width: 54px;
     text-align: center;
 }
 
@@ -462,7 +515,7 @@ header p .button {
 .sheet.sheet--even .footer .pagenum {
     right: 5px;
     bottom: 7px;
-    width: 21px;
+    width: 54px;
     text-align: center;
 }
 
@@ -489,6 +542,7 @@ header p .button {
     p, h2, h3, .inline-h3 {
         font-size: revert;
     }
+
     .sheet-wrapper {
         padding: 0;
         margin: 0;
@@ -652,6 +706,19 @@ header p .button {
     .sheet .char-img-head-mobile {
         float: left;
         margin-top: -200px;
+    }
+}
+
+/* PHONE */
+@media only screen and (max-width: 600px) {
+    .headnav > .nav:first-of-type {
+        order: 0;
+    }
+    .headnav > .current {
+        order: 2;
+    }
+    .headnav > .nav:last-of-type {
+        order: 1;
     }
 }
 

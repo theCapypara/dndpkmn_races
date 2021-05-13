@@ -13,12 +13,15 @@ require_once dirname(__FILE__) . '/vendor/autoload.php';
 require_once dirname(__FILE__) . '/vendor/pecee/simple-router/helpers.php';
 require_once dirname(__FILE__) . '/db.php';
 require_once dirname(__FILE__) . '/content.php';
+require_once dirname(__FILE__) . '/race_index.php';
+require_once dirname(__FILE__) . '/twig_util.php';
 
 use Pecee\Http\Request;
 use Pecee\SimpleRouter\Exceptions\NotFoundHttpException;
 use Pecee\SimpleRouter\SimpleRouter;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Twig\TwigFunction;
 
 $loader = new FilesystemLoader(dirname(__FILE__) . '/views');
 
@@ -47,8 +50,17 @@ function createHeadData($canonical, $subPageTitle=null)
     ];
 }
 
-SimpleRouter::get('/', function() {
-    redirect("https://dndpkmn.com/players-pokedex.html", 301);
+SimpleRouter::get('/', function() use ($loader) {
+    $twig = new Environment($loader);
+    $function = new TwigFunction('numberToRoman', function (...$args) {
+        return numberToRoman(...$args);
+    });
+    $twig->addFunction($function);
+    echo $twig->render('index.twig', [
+        'index' => (new RaceIndex(createDb()))->createFull(),
+        'head' => createHeadData(''),
+        'showOg' => true
+    ]);
 });
 
 SimpleRouter::post('/submitSHEET', function() {
@@ -109,14 +121,10 @@ SimpleRouter::post('/submitDEX', function() {
     }
 });
 
-SimpleRouter::get('/gens/{gen}', function($gen) use ($loader) {
-    $twig = new Environment($loader);
-    // TODO
-});
-
 SimpleRouter::get('/{pokemon}', function($pokemonName) use ($loader) {
     $twig = new Environment($loader);
-    $race = createDb()->getRace($pokemonName);
+    $db = createDb();
+    $race = $db->getRace($pokemonName);
     if (!$race) {
         response()->httpCode(404);
         echo $twig->render('not_found.twig', [
@@ -125,11 +133,12 @@ SimpleRouter::get('/{pokemon}', function($pokemonName) use ($loader) {
         ]);
         return;
     }
+    $pokePageNum = RaceIndex::getRacePageNum($db->getPokemonDexByName($race['name']), $db);
     echo $twig->render('race_sheet.twig', [
         'pokemon' => $race,
         'head' => createHeadData($race['_id'], $race['name']),
         'showOg' => true,
-        'content' => (new Content($twig, $race))->render()
+        'content' => (new Content($twig, $race, $pokePageNum))->render()
     ]);
 });
 
@@ -141,7 +150,6 @@ SimpleRouter::error(function(Request $request, \Exception $exception) use ($load
             'head' => createHeadData(''),
             'showOg' => false
         ]);
-        return;
     }
 
 });

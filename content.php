@@ -29,10 +29,11 @@ class Content
     const DIR_LAYOUT = 'layout';
     const DIR_LAYOUT_BLOCKS = '_blocks';
 
-    public function __construct(\Twig\Environment $twigEnv, ArrayAccess $race)
+    public function __construct(\Twig\Environment $twigEnv, ArrayAccess $race, $pokePageNum)
     {
         $this->twigEnv = $twigEnv;
         $this->race = $race;
+        $this->pokePageNum = $pokePageNum;
     }
 
     private static function pathJoin(...$dirParts)
@@ -89,7 +90,8 @@ class Content
             'sheet_mod_class' => $pageNum % 2 == 0 ? 'sheet--odd' : 'sheet--even',
             'sheet_mod_bg_name' => $pageNum % 2 == 0 ? 'page1' : 'page2',
             'footer' => $this->tryRender(self::pathJoin(self::DIR_BLOCKS, self::DIR_LAYOUT, self::DIR_LAYOUT_BLOCKS, 'footer'), [
-                'pokemon' => $this->race
+                'pokemon' => $this->race,
+                'page_num' => substr($this->pokePageNum, 0, -1) . ($pageNum + 1)
             ])
         ]);
     }

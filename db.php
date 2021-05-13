@@ -75,12 +75,22 @@ class Db
         return $sheetCollection->findOne([ '_id' => $pokemonName]);
     }
 
+    public function listExistingIds()
+    {
+        $sheetCollection = $this->database->sheets;
+        $result = [];
+        foreach ($sheetCollection->find([], ['projection' => ['_id' => true]]) as $row) {
+            $result[] = $row['_id'];
+        }
+        return $result;
+    }
+
     public function listPokemonMapByDexId($fakemon=false)
     {
         $dexCollection = $this->database->pokedex;
         $vals = [];
         foreach($dexCollection->find(['fake' => $fakemon], ['sort' => ['dex' => 1, 'mod' => 1]]) as $r) {
-            $vals[$r['_id']] = $r['name'];
+            $vals[$r['_id']] = $r;
         }
         return $vals;
     }
@@ -90,22 +100,25 @@ class Db
         $dexCollection = $this->database->pokedex;
         $vals = [];
         foreach($dexCollection->find(['fake' => $fakemon]) as $r) {
-            $vals[$r['name']] = $r['_id'];
+            $vals[$r['name']] = $r;
         }
         return $vals;
     }
 
-    public function getPokemonNameByDexId($dexId)
+    public function getPokemonDexByName($pokemonName)
     {
         $dexCollection = $this->database->pokedex;
-        $x = $dexCollection->findOne([ '_id' => $dexId]);
-        return $x ? $x['name'] : null;
+        return $dexCollection->findOne([ 'name' => $pokemonName]);
     }
 
-    public function getPokemonDexIdByName($pokemonName)
+    private $_getPokemonDexAllEntriesForId_Cache = [];
+    public function getPokemonDexAllEntriesForId($id, $fakemon)
     {
-        $dexCollection = $this->database->pokedex;
-        $x =  $dexCollection->findOne([ 'name' => $pokemonName]);
-        return $x ? $x['_id'] : null;
+        $c = ((string) $id) . '_' . ((string) $fakemon);
+        if (!in_array($c, $this->_getPokemonDexAllEntriesForId_Cache)) {
+            $dexCollection = $this->database->pokedex;
+            $this->_getPokemonDexAllEntriesForId_Cache[$c] = $dexCollection->find(['dex' => $id, 'fake' => $fakemon], ['sort' => ['mod' => 1]]);
+        }
+        return $this->_getPokemonDexAllEntriesForId_Cache[$c];
     }
 }
