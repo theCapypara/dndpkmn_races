@@ -542,6 +542,9 @@ header p .button {
     p, h2, h3, .inline-h3 {
         font-size: revert;
     }
+    header {
+        margin-bottom: 60px;
+    }
 
     .sheet-wrapper {
         padding: 0;
