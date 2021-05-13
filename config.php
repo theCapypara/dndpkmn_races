@@ -37,5 +37,15 @@ class Config
 
 function normalizeName($name)
 {
-    return str_replace(":", "", str_replace("'", '-', str_replace("\n", '-', str_replace(' ', '-', strtolower($name)))));
+    return str_replace("♂", "w",
+        str_replace("♀", "w",
+            str_replace(":", "",
+                str_replace("'", '-',
+                    str_replace("\n", '-',
+                        str_replace(' ', '-', strtolower($name))
+                    )
+                )
+            )
+        )
+    );
 }
