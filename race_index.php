@@ -58,9 +58,9 @@ class RaceIndex
                 'page' => self::getRacePageNum($entry, $this->db),
                 'icon' => in_array($iconCandidate, $icons) ? $iconCandidate : null,
                 'name' => $entry['name'],
-                'exists' => in_array($id, $existing),
                 'id' => $id,
-                'main' => !$entry['mod']
+                'main' => !$entry['mod'],
+                'finished' => $this->getFinishedState($entry, $id, $existing)
             ];
         }
         foreach ($this->db->listPokemonMapByDexId(true) as $entry) {
@@ -71,9 +71,9 @@ class RaceIndex
                 'page' => self::getRacePageNum($entry, $this->db),
                 'icon' => in_array($iconCandidate, $icons) ? $iconCandidate : null,
                 'name' => $entry['name'],
-                'exists' => in_array($id, $existing),
                 'id' => $id,
-                'main' => !$entry['mod']
+                'main' => !$entry['mod'],
+                'finished' => $this->getFinishedState($entry, $id, $existing)
             ];
         }
         return $generations;
@@ -97,5 +97,19 @@ class RaceIndex
             $pageNum = $idx * 2 + 1;
         }
         return $prefix . $num . '.' . $pageNum;
+    }
+
+    private function getFinishedState($entry, $id, $existing)
+    {
+        if (!in_array($id, $existing) || !array_key_exists('finished', $entry)) {
+            return 0;
+        }
+        switch ($entry['finished']) {
+            case "Exists":
+                return 1;
+            case "Fully Finished":
+                return 2;
+        }
+        return 0;
     }
 }

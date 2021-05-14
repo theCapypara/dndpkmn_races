@@ -37,6 +37,10 @@ h2 {
     text-decoration: line-through;
 }
 
+.bold {
+    font-weight: bolder;
+}
+
 hr {
     border: none;
     border-bottom: 1px solid #242a66;
@@ -100,6 +104,10 @@ p.book-entry {
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
+}
+
+p.book-entry.index-entry {
+    font-weight: normal;
 }
 
 p.book-entry::after {

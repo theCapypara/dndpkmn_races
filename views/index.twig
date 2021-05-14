@@ -40,9 +40,9 @@
                         <h2>{{ gen['name'] }}</h2>
                         {% set cur = cur + 2 %}
                         {% for entry in gen['items'] %}
-                            <p class="book-entry {% if not entry['exists'] %}strike{% endif %}">
+                            <p class="book-entry index-entry {% if entry['finished'] == 0 %}strike{% endif %} {% if entry['finished'] == 2 %}bold{% endif %}">
                                 <span class="book-entry--title">
-                                    {% if entry['exists'] %}
+                                    {% if entry['finished'] != 0 %}
                                         <a href="/{{ entry['id'] }}">
                                     {% endif %}
                                     <span class="poke_img">
@@ -51,7 +51,7 @@
                                         {% endif %}
                                     </span>
                                     {{ entry['name'] }}
-                                    {% if entry['exists'] %}
+                                    {% if entry['finished'] != 0 %}
                                         </a>
                                     {% endif %}
                                 </span>
