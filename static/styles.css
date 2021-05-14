@@ -38,7 +38,7 @@ h2 {
 }
 
 .bold {
-    font-weight: bolder;
+    font-weight: bolder !important;
 }
 
 hr {
