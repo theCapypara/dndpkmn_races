@@ -81,7 +81,7 @@ class RaceIndex
 
     public static function listAll(Db $db)
     {
-        return $db->listPokemonMapByDexId(false) + $db->listPokemonMapByDexId(true);
+        return array_merge(array_values($db->listPokemonMapByDexId(false)), array_values($db->listPokemonMapByDexId(true)));
     }
 
     public static function index(array $allEntries, $pokedexRow)
