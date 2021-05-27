@@ -207,9 +207,23 @@ footer {
     display: inline-block;
 }
 
+.button.disabled {
+    background-color: #333;
+    text-decoration: line-through;
+}
+
 .button:hover {
     color: black;
     background-color: white;
+}
+
+.button.disabled:hover {
+    color: white;
+    background-color: #333;
+}
+
+.button .small {
+    font-size: 0.6em;
 }
 
 .button.button-big {
@@ -227,6 +241,15 @@ header p .button {
     padding: 10px;
     font-size: 32px;
     height: 57px;
+}
+
+.iflex-vert {
+    display: inline-flex;
+    align-items: center;
+}
+
+.iflex-vert > * {
+    flex: 0 0 auto;
 }
 
 .poke_img {

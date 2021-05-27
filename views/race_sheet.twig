@@ -1,17 +1,55 @@
 {{ include('_head.twig') }}
 <div class="headnav">
+    {% if prev_pokemon %}
     <div class="nav">
-        <a class="button button-small" href="XXX">XXX<br>XXX</a>
+        {% if prev_pokemon['_id'] %}
+        <a class="button button-small iflex-vert" href="/{{ prev_pokemon['_id'] }}">
+        {% else %}
+        <span class="button button-small iflex-vert disabled">
+        {% endif %}
+            {% if prev_pokemon['icon'] %}
+                <img src="/assets/poke_mini/{{ prev_pokemon['icon'] }}">
+            {% endif %}
+            <span style="text-align: left">
+                {{ prev_pokemon['name'] }}
+                <br>
+                <span class="small">← {{ prev_pokemon['pagenum'] }}</span>
+            </span>
+        {% if prev_pokemon['_id'] %}
+        </a>
+        {% else %}
+        </span>
+        {% endif %}
     </div>
+    {% endif %}
     <div class="current">
         <h1>{{ pokemon['name'] }}</h1>
         <p>
             <a class="button button-small" href="#" onclick="window.print();return false;">Print</a>
         </p>
     </div>
+    {% if next_pokemon %}
     <div class="nav">
-        <a class="button button-small" href="XXX">XXX<br>XXX</a>
+        {% if next_pokemon['_id'] %}
+        <a class="button button-small iflex-vert" href="/{{ next_pokemon['_id'] }}">
+            {% else %}
+            <span class="button button-small iflex-vert disabled">
+        {% endif %}
+            <span style="text-align: right">
+                {{ next_pokemon['name'] }}
+                <br>
+                <span class="small">{{ next_pokemon['pagenum'] }} →</span>
+            </span>
+            {% if next_pokemon['icon'] %}
+                <img src="/assets/poke_mini/{{ next_pokemon['icon'] }}">
+            {% endif %}
+        {% if next_pokemon['_id'] %}
+        </a>
+        {% else %}
+        </span>
+        {% endif %}
     </div>
+    {% endif %}
 </div>
 <style>
     @media only screen and (max-width: 1000px) {

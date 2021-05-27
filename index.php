@@ -133,12 +133,52 @@ SimpleRouter::get('/{pokemon}', function($pokemonName) use ($loader) {
         ]);
         return;
     }
-    $pokePageNum = RaceIndex::getRacePageNum($db->getPokemonDexByName($race['name']), $db);
+    $pokedexRow = $db->getPokemonDexByName($race['name']);
+    $pokePageNum = RaceIndex::getRacePageNum($pokedexRow, $db);
+
+    $raceBefore = null;
+    $raceNext = null;
+    $allEntries = RaceIndex::listAll($db);
+    $index = RaceIndex::index($allEntries, $pokedexRow);
+
+    $icons = [];
+    $fileList = glob(dirname(__FILE__) . '/assets/poke_mini/*');
+    //Loop through the array that glob returned.
+    foreach($fileList as $filename){
+        $e = explode('/', $filename);
+        $icons[] = end($e);
+    }
+
+    if ($index !== false && $index > 0) {
+        $entryBefore = $allEntries[$index - 1];
+        $r = $db->getRace(normalizeName($entryBefore['name']));
+        $iconCandidate = ((string) $entryBefore['_id']) . '.png';
+        $raceBefore = [
+            '_id' => $r['_id'],
+            'name' => $entryBefore['name'],
+            'icon' => in_array($iconCandidate, $icons) ? $iconCandidate : null,
+            'pagenum' => RaceIndex::getRacePageNum($entryBefore, $db)
+        ];
+    }
+    if ($index !== false && $index < count($allEntries)) {
+        $entryNext = $allEntries[$index + 1];
+        $r = $db->getRace(normalizeName($entryNext['name']));
+        $iconCandidate = ((string) $entryNext['_id']) . '.png';
+        $raceNext = [
+            '_id' => $r['_id'],
+            'name' => $entryNext['name'],
+            'icon' => in_array($iconCandidate, $icons) ? $iconCandidate : null,
+            'pagenum' => RaceIndex::getRacePageNum($entryNext, $db)
+        ];
+    }
+
     echo $twig->render('race_sheet.twig', [
         'pokemon' => $race,
         'head' => createHeadData($race['_id'], $race['name']),
         'showOg' => true,
-        'content' => (new Content($twig, $race, $pokePageNum))->render()
+        'content' => (new Content($twig, $race, $pokePageNum))->render(),
+        'prev_pokemon' => $raceBefore,
+        'next_pokemon' => $raceNext,
     ]);
 });
 

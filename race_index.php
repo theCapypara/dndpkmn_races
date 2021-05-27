@@ -79,6 +79,16 @@ class RaceIndex
         return $generations;
     }
 
+    public static function listAll(Db $db)
+    {
+        return $db->listPokemonMapByDexId(false) + $db->listPokemonMapByDexId(true);
+    }
+
+    public static function index(array $allEntries, $pokedexRow)
+    {
+        return array_search($pokedexRow, $allEntries);
+    }
+
     public static function getRacePageNum($pokedexRow, Db $db) {
         $prefix = $pokedexRow['fake'] ? 'F' : 'R';
         $num = (string) $pokedexRow['dex'];
