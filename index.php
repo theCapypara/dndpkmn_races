@@ -160,7 +160,7 @@ SimpleRouter::get('/{pokemon}', function($pokemonName) use ($loader) {
             'pagenum' => RaceIndex::getRacePageNum($entryBefore, $db)
         ];
     }
-    if ($index !== false && $index < count($allEntries)) {
+    if ($index !== false && $index < (count($allEntries) - 1)) {
         $entryNext = $allEntries[$index + 1];
         $r = $db->getRace(normalizeName($entryNext['name']));
         $iconCandidate = ((string) $entryNext['_id']) . '.png';
