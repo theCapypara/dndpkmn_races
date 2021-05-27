@@ -468,13 +468,13 @@ header p .button {
 }
 
 .sheet.sheet--odd .bg-ball {
-    width: 100%;
+    width: 500px;
     position: absolute;
     height: 500px;
     top: 120px;
     background-repeat: no-repeat;
     background-position: top center;
-    background-size: 50% auto;
+    background-size: 100% auto;
     transform: rotate(220deg);
 }
 

@@ -1,6 +1,7 @@
 <div class="sheet {{ sheet_mod_class }}">
     <div class="bg" style='background-image: url("/assets/bg/gen{{ pokemon['gen'] }}/{{ sheet_mod_bg_name }}.jpg");'>
-        <div class="bg-ball" style='background-image: url("/assets/bg/stage{{ pokemon['stage'] }}/ball.png");'></div>
+        <div class="bg-ball" style='background-image: url("/assets/bg/stage{{ pokemon['stage'] }}/ball.png");
+                width: {{ ball[1][2] }}px; height: {{ ball[1][3] }}px; left: {{ ball[1][0] }}px; top: {{ ball[1][1] }}px; transform: rotate({{ ball[1][4] }}deg);'></div>
         <div class="content">
             <div class="content-inner">
                 {{ content|raw }}

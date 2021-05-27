@@ -1,8 +1,9 @@
 <div class="sheet page1 {{ sheet_mod_class }}">
     <div class="bg" style='background-image: url("/assets/bg/gen{{ pokemon['gen'] }}/{{ sheet_mod_bg_name }}.jpg");'>
-        <div class="header" style='background-image: url("/assets/poke/{{ pokemon['_id'] }}/header.jpg");'></div>
-        <img class="header-mobile" src="/assets/poke/{{ pokemon['_id'] }}/header.jpg">
-        <div class="bg-ball" style='background-image: url("/assets/bg/stage{{ pokemon['stage'] }}/ball.png");'></div>
+        <div class="header" style='background-image: url("/assets/poke/{{ pokemon['_id'] }}/header.jpg"); mask-image: url("/assets/bg/header_crop{{ header_crop_id }}.png"); -webkit-mask-image: url("/assets/bg/header_crop{{ header_crop_id }}.png");'></div>
+        <img class="header-mobile" src="/assets/poke/{{ pokemon['_id'] }}/header.jpg" style='mask-image: url("/assets/bg/header_crop{{ header_crop_id }}.png"); -webkit-mask-image: url("/assets/bg/header_crop{{ header_crop_id }}.png");'>
+        <div class="bg-ball" style='background-image: url("/assets/bg/stage{{ pokemon['stage'] }}/ball.png");
+                width: {{ ball[0][2] }}px; height: {{ ball[0][3] }}px; left: {{ ball[0][0] }}px; top: {{ ball[0][1] }}px; transform: rotate({{ ball[0][4] }}deg);'></div>
         {% if pic1_exists %}
             <div class="char-img-head">
                 <img src="/assets/poke/{{ pokemon['_id'] }}/pic1.png">

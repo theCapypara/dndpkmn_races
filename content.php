@@ -6,6 +6,11 @@ use Twig\Error\LoaderError;
 class Content
 {
     /**
+     * @var int|string
+     */
+    private $headerId;
+
+    /**
      * @var \Twig\Environment
      */
     private $twigEnv;
@@ -14,6 +19,11 @@ class Content
      * @var ArrayAccess
      */
     private $race;
+
+    /**
+     * @var array
+     */
+    private $ballPosition;
 
     const TPL_EXT = '.twig';
 
@@ -34,6 +44,19 @@ class Content
         $this->twigEnv = $twigEnv;
         $this->race = $race;
         $this->pokePageNum = $pokePageNum;
+        mt_srand(crc32($this->race['_id']));
+        $w1 = $h1 = mt_rand(350, 700);
+        $w2 = $h2 = mt_rand(350, 700);
+        $maxW = 815;
+        $maxH = 1055;
+        $this->ballPosition = [
+            [($maxW - $w1) * (mt_rand(5, 100) / 100), ($maxH - $h1) * (mt_rand(25, 100) / 100), $w1, $h1, mt_rand(0, 360)],
+            [($maxW - $w2) * (mt_rand(5, 100) / 100), ($maxH - $h1) * (mt_rand(5, 100) / 100), $w2, $h2, mt_rand(0, 360)]
+        ];
+        $this->headerId = mt_rand(1, 5);
+        if ($this->headerId == 1) {
+            $this->headerId = '';
+        }
     }
 
     private static function pathJoin(...$dirParts)
@@ -89,6 +112,8 @@ class Content
             'content' => $pageContent,
             'sheet_mod_class' => $pageNum % 2 == 0 ? 'sheet--odd' : 'sheet--even',
             'sheet_mod_bg_name' => $pageNum % 2 == 0 ? 'page1' : 'page2',
+            'ball' => $this->ballPosition,
+            'header_crop_id' => $this->headerId,
             'footer' => $this->tryRender(self::pathJoin(self::DIR_BLOCKS, self::DIR_LAYOUT, self::DIR_LAYOUT_BLOCKS, 'footer'), [
                 'pokemon' => $this->race,
                 'page_num' => substr($this->pokePageNum, 0, -1) . ($pageNum + 1)
