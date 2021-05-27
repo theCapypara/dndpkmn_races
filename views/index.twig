@@ -39,7 +39,7 @@
                         {% if gen['items']|length > 0 %}
                         <div class="stand-out-margin"></div>
                         <h2>{{ gen['name'] }}</h2>
-                        {% set cur = cur + 3 %}
+                        {% set cur = cur + 4 %}
                         {% for entry in gen['items'] %}
                             <p class="book-entry index-entry {% if entry['finished'] == 0 %}strike{% endif %} {% if entry['finished'] == 2 %}bold{% endif %}">
                                 <span class="book-entry--title">
