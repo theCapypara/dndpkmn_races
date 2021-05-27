@@ -76,6 +76,7 @@ p {
 
 .sheet .bg {
     height: 100%;
+    background-size: cover;
 }
 
 p.flavor {
