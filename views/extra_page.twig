@@ -12,18 +12,18 @@
                     <div class="extra">
                         {% if not section['image'] %}
                             <div class="extra-sector">
-                                <p class="flavor">{{ section['flavor'] }}</p>
+                                {% if section['flavor'] %}<p class="flavor ability-flavor">{{ section['flavor'] }}</p>{% endif %}
                                 {{ section['content']|raw }}
                             </div>
                         {% elseif loop.index0 is divisible by(2) %}
                             <div style="background-image: url('/assets/poke/{{ pokemon['_id'] }}/{{ section['image'] }}');" class="extra-image"></div>
                             <div class="extra-sector">
-                                <p class="flavor">{{ section['flavor'] }}</p>
+                                {% if section['flavor'] %}<p class="flavor ability-flavor">{{ section['flavor'] }}</p>{% endif %}
                                 {{ section['content']|raw }}
                             </div>
                         {% else %}
                             <div class="extra-sector">
-                                <p class="flavor">{{ section['flavor'] }}</p>
+                                {% if section['flavor'] %}<p class="flavor ability-flavor">{{ section['flavor'] }}</p>{% endif %}
                                 {{ section['content']|raw }}
                             </div>
                             <div style="background-image: url('/assets/poke/{{ pokemon['_id'] }}/{{ section['image'] }}');" class="extra-image"></div>
