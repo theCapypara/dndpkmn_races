@@ -39,6 +39,8 @@ class Content
     const DIR_LAYOUT = 'layout';
     const DIR_LAYOUT_BLOCKS = '_blocks';
 
+    const EXTRA_PAGE = 'extra_page';
+
     public function __construct(\Twig\Environment $twigEnv, ArrayAccess $race, $pokePageNum)
     {
         $this->twigEnv = $twigEnv;
@@ -88,6 +90,12 @@ class Content
             $content .= $this->renderPage($pageNum, $pageContent);
             $pageNum++;
         }
+        if (array_key_exists('extra', $this->race) && is_array($this->race['extra'])) {
+            foreach (array_chunk($this->race['extra'], 2) as $chunk) {
+                $content .= $this->renderExtraPage($pageNum, $chunk);
+                $pageNum++;
+            }
+        }
         return $content;
     }
 
@@ -114,6 +122,21 @@ class Content
             'sheet_mod_bg_name' => $pageNum % 2 == 0 ? 'page1' : 'page2',
             'ball' => $this->ballPosition,
             'header_crop_id' => $this->headerId,
+            'footer' => $this->tryRender(self::pathJoin(self::DIR_BLOCKS, self::DIR_LAYOUT, self::DIR_LAYOUT_BLOCKS, 'footer'), [
+                'pokemon' => $this->race,
+                'page_num' => substr($this->pokePageNum, 0, -1) . ($pageNum + 1)
+            ])
+        ]);
+    }
+
+    public function renderExtraPage(int $pageNum, array $sections)
+    {
+        return $this->tryRender(self::EXTRA_PAGE, [
+            'pokemon' => $this->race,
+            'sheet_mod_class' => $pageNum % 2 == 0 ? 'sheet--odd' : 'sheet--even',
+            'sheet_mod_bg_name' => $pageNum % 2 == 0 ? 'page1' : 'page2',
+            'ball' => $this->ballPosition[$pageNum % 2],
+            'sections' => $sections,
             'footer' => $this->tryRender(self::pathJoin(self::DIR_BLOCKS, self::DIR_LAYOUT, self::DIR_LAYOUT_BLOCKS, 'footer'), [
                 'pokemon' => $this->race,
                 'page_num' => substr($this->pokePageNum, 0, -1) . ($pageNum + 1)

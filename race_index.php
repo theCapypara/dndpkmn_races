@@ -96,15 +96,20 @@ class RaceIndex
             $pageNum = 1;
         } else {
             $all = $db->getPokemonDexAllEntriesForId($pokedexRow['dex'], $pokedexRow['fake']);
-            $idx = 0;
+            $pageNumBefore = 0;
             foreach ($all as $entry) {
+                $pages = 2;
+                $race = $db->getRace(normalizeName($entry['name']));
+                if ($race && array_key_exists('extra', $race) && is_array($race['extra'])) {
+                    $pages += ceil(count($race['extra']) / 2);
+                }
                 if ($entry['mod'] == $pokedexRow['mod']) {
                     break;
                 }
-                $idx++;
+                $pageNumBefore += $pages;
             }
             // TODO: Breaks with more than 2 pages per Pokémon.
-            $pageNum = $idx * 2 + 1;
+            $pageNum = $pageNumBefore + 1;
         }
         return $prefix . $num . '.' . $pageNum;
     }

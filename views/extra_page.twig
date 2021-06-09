@@ -1,0 +1,37 @@
+<div class="sheet sheet--one-col {{ sheet_mod_class }}">
+    <div class="bg" style='background-image: url("/assets/bg/gen{{ pokemon['gen'] }}/{{ sheet_mod_bg_name }}.jpg");'>
+        <div class="bg-ball" style='background-image: url("/assets/bg/stage{{ pokemon['stage'] }}/ball.png");
+                width: {{ ball[2] }}px; height: {{ ball[3] }}px; left: {{ ball[0] }}px; top: {{ ball[1] }}px; transform: rotate({{ ball[4] }}deg);'></div>
+        <div class="content">
+            <div class="content-inner">
+                {% for section in sections %}
+                    {% if loop.index0 != 0 %}
+                        <hr>
+                    {% endif %}
+                    <h2 class="extra-title">{{ section['title'] }}</h2>
+                    <div class="extra">
+                        {% if not section['image'] %}
+                            <div class="extra-sector two-col">
+                                <p class="flavor">{{ section['flavor'] }}</p>
+                                {{ section['content']|raw }}
+                            </div>
+                        {% elseif loop.index0 is divisible by(2) %}
+                            <div style="background-image: url('/assets/poke/{{ pokemon['_id'] }}/{{ section['image'] }}');" class="extra-image"></div>
+                            <div class="extra-sector">
+                                <p class="flavor">{{ section['flavor'] }}</p>
+                                {{ section['content']|raw }}
+                            </div>
+                        {% else %}
+                            <div class="extra-sector">
+                                <p class="flavor">{{ section['flavor'] }}</p>
+                                {{ section['content']|raw }}
+                            </div>
+                            <div style="background-image: url('/assets/poke/{{ pokemon['_id'] }}/{{ section['image'] }}');" class="extra-image"></div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            {{ footer|raw }}
+        </div>
+    </div>
+</div>
