@@ -100,7 +100,7 @@ class RaceIndex
             foreach ($all as $entry) {
                 $pages = 2;
                 $race = $db->getRace(normalizeName($entry['name']));
-                if ($race && array_key_exists('extra', $race) && is_array($race['extra'])) {
+                if ($race && array_key_exists('extra', $race)) {
                     $pages += ceil(count($race['extra']) / 2);
                 }
                 if ($entry['mod'] == $pokedexRow['mod']) {
