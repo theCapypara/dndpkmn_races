@@ -42,7 +42,9 @@ function normalizeName($name)
             str_replace(":", "",
                 str_replace("'", '-',
                     str_replace("\n", '-',
-                        str_replace(' ', '-', strtolower($name))
+                        str_replace(' ', '-',
+                            str_replace('.', '', strtolower($name))
+                        )
                     )
                 )
             )
