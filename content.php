@@ -91,7 +91,7 @@ class Content
             $pageNum++;
         }
         if (array_key_exists('extra', $this->race)) {
-            foreach (array_chunk($this->race['extra'], 2) as $chunk) {
+            foreach (array_chunk($this->race['extra']->getArrayCopy(), 2) as $chunk) {
                 $content .= $this->renderExtraPage($pageNum, $chunk);
                 $pageNum++;
             }
